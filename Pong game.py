@@ -1,12 +1,10 @@
 #Simple Pong game 
 import turtle
-import os
 
 window = turtle.Screen() # Window
 window.title("Pong Game") #title
 window.bgcolor("black") #Set background color
 window.setup(height=600, width=800) #Set size of window
-window.tracer(0) #Set tracer
 
 # Score
 score_a = 0
@@ -40,13 +38,13 @@ line.goto(0,0)
 
 #Ball
 ball = turtle.Turtle()
-ball.speed(0)
+ball.speed(10)
 ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 2
-ball.dy = 2
+ball.dx = 7
+ball.dy = -7
 
 #Players Score
 pen = turtle.Turtle()
@@ -112,14 +110,14 @@ while True:
         ball.dy *= -1
 
     # Left and right
-    if ball.xcor() > 350:
+    if ball.xcor() > 380:
         score_a += 1
         pen.clear()
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
         ball.goto(0, 0)
         ball.dx *= -1
 
-    elif ball.xcor() < -350:
+    elif ball.xcor() < -380:
         score_b += 1
         pen.clear()
         pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
@@ -127,8 +125,15 @@ while True:
         ball.dx *= -1
 
     # Paddle and ball collisions
-    if ball.xcor() < -340 and ball.ycor() < pad1.ycor() + 50 and ball.ycor() > pad1.ycor() - 50:
-        ball.dx *= -1 
-    
-    elif ball.xcor() > 340 and ball.ycor() < pad2.ycor() + 50 and ball.ycor() > pad2.ycor() - 50:
+    if ball.xcor() < -340 and ball.ycor() < pad1.ycor() + 50 and ball.ycor() >= pad1.ycor():
         ball.dx *= -1
+        ball.dy = 7
+    if ball.xcor() < -340 and ball.ycor() > pad1.ycor() - 50 and ball.ycor() <= pad1.ycor():
+        ball.dx *= -1
+        ball.dy = -7
+    if ball.xcor() > 340 and ball.ycor() < pad2.ycor() + 50 and ball.ycor() >= pad2.ycor():
+        ball.dx *= -1
+        ball.dy = 7
+    if ball.xcor() > 340 and ball.ycor() > pad2.ycor() - 50 and ball.ycor() <= pad2.ycor():
+        ball.dx *= -1
+        ball.dy = -7
